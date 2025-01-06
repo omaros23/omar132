@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartEdu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .hero {
+            background: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 100px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .service-card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            transition: transform 0.3s;
+            height: 300px; /* تحديد ارتفاع ثابت للمربعات */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        .service-title {
+            font-size: 1.25rem;
+            color: #007bff;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        .service-title:hover {
+            text-decoration: underline;
+        }
+        .service-description {
+            font-size: 1rem;
+            color: #555;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">SmartEdu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="hero">
+    <div class="container">
+        <h1>SmartEdu</h1>
+        <p>SmartEdu provides innovative and effective educational services designed to help students achieve their academic goals. From personalized learning plans to expert guidance, we are committed to your success.</p>
+        <a href="#" class="btn btn-light">Learn More</a>
+        <a href="#" class="btn btn-primary">Get Started - It's Free</a>
+    </div>
+</div>
+
+<div id="services" class="container py-5">
+    <h2 class="text-center mb-4">Services</h2>
+    <div class="row">
+        <!-- Service 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="1.html" class="service-title">GPA Calculator</a>
+                <p class="service-description">Calculate your GPA quickly and easily.</p>
+            </div>
+        </div>
+        <!-- Service 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="2.html" class="service-title">Study Planner</a>
+                <p class="service-description">Plan and organize your study schedule.</p>
+            </div>
+        </div>
+        <!-- Service 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="3.html" class="service-title">Study Materials Library</a>
+                <p class="service-description">A Study Materials Library provides quick access to organized resources, boosting learning efficiency.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Service 4 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="4.html" class="service-title">Research Paper Upload</a>
+                <p class="service-description">You can add a service to upload research papers by students</p>
+            </div>
+        </div>
+        <!-- Service 5 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="5.html" class="service-title">Personal Academic Assistant</a>
+                <p class="service-description"> An interactive AI-based robot that can provide academic advice on how to improve study performance, based on your academic data</p>
+            </div>
+        </div>
+        <!-- Service 6 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="6.html" class="service-title">Mock Exams</a>
+                <p class="service-description">Simulation of university or school tests.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Service 7 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="7.html" class="service-title">Lecture and exam management</a>
+                <p class="service-description">A tool for teachers to schedule lectures, add exam questions.</p>
+            </div>
+        </div>
+        <!-- Service 8 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="8.html" class="service-title">Digital Library</a>
+                <p class="service-description">An online library containing textbooks, educational videos, research papers, and academic resources.</p>
+            </div>
+        </div>
+        <!-- Service 9 -->
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <a href="9.html" class="service-title">Academic Tracking</a>
+                <p class="service-description">Monitor their academic progress on an ongoing basis. Includes tracking of grades, lectures, and assignments.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>&copy; 2025 SmartEdu. All rights reserved.</p>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

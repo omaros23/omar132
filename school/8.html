@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Library - SmartEdu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .library-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .library-header h1 {
+            font-size: 3rem;
+        }
+        .library-search {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .library-search input, .library-search select, .library-search button {
+            margin: 10px;
+        }
+        .library-items {
+            margin-top: 40px;
+        }
+        .library-item {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .library-item:hover {
+            transform: scale(1.05);
+        }
+        .library-item h5 {
+            font-size: 1.2rem;
+            color: #007bff;
+        }
+        .library-item p {
+            font-size: 1rem;
+            color: #555;
+        }
+        .library-item button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .library-item button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="library-header">
+    <h1>Digital Library</h1>
+    <p>Access a wide range of academic resources including books, research papers, videos, and more!</p>
+</div>
+
+<div class="container">
+    <div class="library-search">
+        <h3>Search the Library</h3>
+        <input type="text" id="searchQuery" class="form-control" placeholder="Search for books, papers, videos..." style="max-width: 400px; display: inline-block;">
+        <select id="categoryFilter" class="form-control" style="max-width: 200px; display: inline-block;">
+            <option value="">Category</option>
+            <option value="Books">Books</option>
+            <option value="Research Papers">Research Papers</option>
+            <option value="Videos">Videos</option>
+        </select>
+        <button id="searchButton" class="btn btn-primary">Search</button>
+    </div>
+
+    <div class="library-items" id="libraryItems">
+        <!-- List of resources will be dynamically inserted here -->
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Sample data for the digital library
+    const resources = [
+        { title: "Introduction to AI", category: "Books", description: "A comprehensive guide to Artificial Intelligence.", file: "ai-book.pdf" },
+        { title: "Research on Climate Change", category: "Research Papers", description: "A detailed research paper on climate change effects.", file: "climate-change-paper.pdf" },
+        { title: "Machine Learning Tutorial", category: "Videos", description: "A step-by-step tutorial on machine learning.", file: "ml-tutorial.mp4" },
+        { title: "Data Science Handbook", category: "Books", description: "A handbook for data science and analytics.", file: "data-science-book.pdf" },
+        { title: "Quantum Computing Paper", category: "Research Papers", description: "An in-depth research paper on quantum computing.", file: "quantum-computing-paper.pdf" },
+        { title: "Introduction to Python", category: "Videos", description: "A video tutorial for beginners in Python programming.", file: "python-intro.mp4" }
+    ];
+
+    // Function to render the library items
+    function renderLibraryItems(items) {
+        const libraryItemsContainer = document.getElementById('libraryItems');
+        libraryItemsContainer.innerHTML = ''; // Clear existing items
+
+        if (items.length === 0) {
+            libraryItemsContainer.innerHTML = '<p>No results found. Try adjusting your search.</p>';
+        } else {
+            items.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('library-item');
+                itemElement.innerHTML = `
+                    <h5>${item.title}</h5>
+                    <p><strong>Category:</strong> ${item.category}</p>
+                    <p><strong>Description:</strong> ${item.description}</p>
+                    <button onclick="downloadFile('${item.file}')">Download</button>
+                `;
+                libraryItemsContainer.appendChild(itemElement);
+            });
+        }
+    }
+
+    // Function to handle file download (for demonstration purposes, just logs the file name)
+    function downloadFile(fileName) {
+        alert(`Downloading ${fileName}...`);
+    }
+
+    // Search functionality
+    document.getElementById('searchButton').addEventListener('click', function() {
+        const searchQuery = document.getElementById('searchQuery').value.toLowerCase();
+        const categoryFilter = document.getElementById('categoryFilter').value;
+
+        const filteredResources = resources.filter(resource => {
+            const matchesSearch = resource.title.toLowerCase().includes(searchQuery) || resource.description.toLowerCase().includes(searchQuery);
+            const matchesCategory = categoryFilter ? resource.category === categoryFilter : true;
+            return matchesSearch && matchesCategory;
+        });
+
+        renderLibraryItems(filteredResources);
+    });
+
+    // Initial render of all resources
+    renderLibraryItems(resources);
+</script>
+
+</body>
+</html>

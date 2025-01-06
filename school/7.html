@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture & Exam Management - SmartEdu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .lecture-container {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .lecture-container h2 {
+            color: #007bff;
+        }
+        .add-lecture-form input, .add-lecture-form textarea, .add-lecture-form button {
+            margin-top: 10px;
+        }
+        .add-exam-form input, .add-exam-form button {
+            margin-top: 10px;
+        }
+        .report-section {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container lecture-container">
+    <h2>Lecture & Exam Management</h2>
+    <p class="description">Manage lectures, exams, student results, and deadlines. You can schedule lectures, add exam questions, and track student performance over time.</p>
+
+    <!-- Add Lecture Form -->
+    <div class="add-lecture-form mt-4">
+        <h4>Add New Lecture</h4>
+        <form id="addLectureForm">
+            <div class="mb-3">
+                <label for="lectureTitle" class="form-label">Lecture Title</label>
+                <input type="text" class="form-control" id="lectureTitle" required>
+            </div>
+            <div class="mb-3">
+                <label for="lectureFile" class="form-label">Upload Lecture Description (File)</label>
+                <input type="file" class="form-control" id="lectureFile" required>
+            </div>
+            <div class="mb-3">
+                <label for="lectureDate" class="form-label">Lecture Date & Time</label>
+                <input type="datetime-local" class="form-control" id="lectureDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Lecture</button>
+        </form>
+    </div>
+
+    <!-- Add Exam Form -->
+    <div class="add-exam-form mt-4">
+        <h4>Add Exam Questions</h4>
+        <form id="addExamForm">
+            <div class="mb-3">
+                <label for="examTitle" class="form-label">Exam Title</label>
+                <input type="text" class="form-control" id="examTitle" required>
+            </div>
+            <div class="mb-3">
+                <label for="examFile" class="form-label">Upload Exam Questions (File)</label>
+                <input type="file" class="form-control" id="examFile" required>
+            </div>
+            <div class="mb-3">
+                <label for="examDate" class="form-label">Exam Date & Time</label>
+                <input type="datetime-local" class="form-control" id="examDate" required>
+            </div>
+            <button type="submit" class="btn btn-success">Add Exam</button>
+        </form>
+    </div>
+
+    <!-- Report Section -->
+    <div class="report-section mt-4">
+        <h4>Student Reports</h4>
+        <p id="reportDetails">Track student results, compare grades across lectures, and view reports over time.</p>
+        <button class="btn btn-info" id="viewReports">View Reports</button>
+    </div>
+</div>
+
+<div class="footer">
+    <p>&copy; 2025 SmartEdu. All rights reserved.</p>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Array to hold lecture and exam data
+    let lectures = JSON.parse(localStorage.getItem('lectures')) || [];
+    let exams = JSON.parse(localStorage.getItem('exams')) || [];
+
+    // Add Lecture Form
+    document.getElementById('addLectureForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const lectureTitle = document.getElementById('lectureTitle').value;
+        const lectureFile = document.getElementById('lectureFile').files[0];
+        const lectureDate = document.getElementById('lectureDate').value;
+
+        if (lectureFile) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const fileContent = e.target.result;
+
+                const newLecture = {
+                    title: lectureTitle,
+                    fileContent: fileContent, // Store file content as Base64 string
+                    date: new Date(lectureDate).toLocaleString(),
+                };
+
+                lectures.push(newLecture);
+                localStorage.setItem('lectures', JSON.stringify(lectures));
+
+                alert('Lecture added successfully!');
+                document.getElementById('addLectureForm').reset(); // Clear the form
+            };
+            reader.readAsDataURL(lectureFile); // Read the file as base64
+        }
+    });
+
+    // Add Exam Form
+    document.getElementById('addExamForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const examTitle = document.getElementById('examTitle').value;
+        const examFile = document.getElementById('examFile').files[0];
+        const examDate = document.getElementById('examDate').value;
+
+        if (examFile) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const fileContent = e.target.result;
+
+                const newExam = {
+                    title: examTitle,
+                    fileContent: fileContent, // Store file content as Base64 string
+                    date: new Date(examDate).toLocaleString(),
+                };
+
+                exams.push(newExam);
+                localStorage.setItem('exams', JSON.stringify(exams));
+
+                alert('Exam added successfully!');
+                document.getElementById('addExamForm').reset(); // Clear the form
+            };
+            reader.readAsDataURL(examFile); // Read the file as base64
+        }
+    });
+
+    // View Reports (for now, just shows stored data)
+    document.getElementById('viewReports').addEventListener('click', function() {
+        if (lectures.length === 0 && exams.length === 0) {
+            alert('No data available to generate reports.');
+            return;
+        }
+
+        let reportText = 'Lectures:\n';
+        lectures.forEach((lecture, index) => {
+            reportText += `Lecture ${index + 1}: ${lecture.title}, Date: ${lecture.date}\n`;
+        });
+
+        reportText += '\nExams:\n';
+        exams.forEach((exam, index) => {
+            reportText += `Exam ${index + 1}: ${exam.title}, Date: ${exam.date}\n`;
+        });
+
+        alert(reportText);
+    });
+</script>
+
+</body>
+</html>

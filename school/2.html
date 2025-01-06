@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Planner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .task-form {
+            margin-bottom: 20px;
+        }
+
+        .task-form input[type="text"],
+        .task-form input[type="date"],
+        .task-form button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .task-form input[type="text"] {
+            width: 50%;
+        }
+
+        .task-form input[type="date"] {
+            width: 30%;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Study Planner</h1>
+
+        <div class="task-form">
+            <input type="text" id="taskName" placeholder="Enter task name" required>
+            <input type="date" id="taskDate" required>
+            <button onclick="addTask()">Add Task</button>
+        </div>
+
+        <table id="taskTable">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Tasks will appear here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Load tasks from Local Storage when the page loads
+        window.onload = function() {
+            loadTasks();
+        }
+
+        // Function to load tasks from Local Storage
+        function loadTasks() {
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            let table = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
+            tasks.forEach(function(task) {
+                let newRow = table.insertRow();
+
+                let taskNameCell = newRow.insertCell(0);
+                let taskDateCell = newRow.insertCell(1);
+                let deleteCell = newRow.insertCell(2);
+
+                taskNameCell.textContent = task.name;
+                taskDateCell.textContent = task.date;
+                deleteCell.innerHTML = `<button class="delete-btn" onclick="deleteTask(this)">Delete</button>`;
+            });
+        }
+
+        // Function to add a new task to Local Storage and display it
+        function addTask() {
+            let taskName = document.getElementById("taskName").value;
+            let taskDate = document.getElementById("taskDate").value;
+
+            if (taskName && taskDate) {
+                let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                tasks.push({ name: taskName, date: taskDate });
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+
+                let table = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
+                let newRow = table.insertRow();
+
+                let taskNameCell = newRow.insertCell(0);
+                let taskDateCell = newRow.insertCell(1);
+                let deleteCell = newRow.insertCell(2);
+
+                taskNameCell.textContent = taskName;
+                taskDateCell.textContent = taskDate;
+                deleteCell.innerHTML = `<button class="delete-btn" onclick="deleteTask(this)">Delete</button>`;
+
+                document.getElementById("taskName").value = '';
+                document.getElementById("taskDate").value = '';
+            } else {
+                alert("Please fill in both fields!");
+            }
+        }
+
+        // Function to delete a task from Local Storage and the table
+        function deleteTask(button) {
+            let row = button.parentNode.parentNode;
+            let taskName = row.cells[0].textContent;
+            let taskDate = row.cells[1].textContent;
+
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks = tasks.filter(task => task.name !== taskName || task.date !== taskDate);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+</body>
+</html>

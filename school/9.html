@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Tracking - SmartEdu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .tracking-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <h1>Academic Tracking</h1>
+    <p>Track your academic progress, view grades, lectures, and assignments!</p>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+    <!-- Tracking Section -->
+    <div class="tracking-card">
+        <h4>Progress Overview</h4>
+        <p>See your academic progress at a glance, including grades, lectures, and assignments.</p>
+        
+        <!-- Academic Progress Chart -->
+        <canvas id="gradesChart"></canvas>
+    </div>
+
+    <!-- Report Section -->
+    <div class="tracking-card">
+        <h4>Weekly Report</h4>
+        <p>Your progress in the last week:</p>
+        <div id="reportContent">Loading...</div>
+    </div>
+
+    <!-- Assignments & Lectures -->
+    <div class="tracking-card">
+        <h4>Upcoming Lectures and Assignments</h4>
+        <p>Check the next assignments and lectures.</p>
+        <ul id="lecturesAssignmentsList">
+            <li>Lecture: Math 101 - 2025-01-15</li>
+            <li>Assignment: Physics Homework - Due: 2025-01-18</li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>&copy; 2025 SmartEdu. All rights reserved.</p>
+</div>
+
+<!-- Bootstrap JS and Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Sample grade data for chart
+    const gradeData = {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+        datasets: [{
+            label: 'Grades',
+            data: [75, 80, 85, 90, 95], // Example grade percentages for each week
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    // Options for the chart
+    const config = {
+        type: 'line',
+        data: gradeData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Grade Percentage'
+                    }
+                }
+            }
+        }
+    };
+
+    // Render the chart
+    const gradesChart = new Chart(document.getElementById('gradesChart'), config);
+
+    // Simulating data retrieval for weekly report
+    function generateWeeklyReport() {
+        const reportContent = `
+            <ul>
+                <li>Math 101 - Grade: 85%</li>
+                <li>Physics 201 - Grade: 90%</li>
+                <li>Chemistry 103 - Grade: 78%</li>
+                <li>Computer Science 101 - Grade: 95%</li>
+            </ul>
+            <p>Great progress this week! Keep it up!</p>
+        `;
+        document.getElementById('reportContent').innerHTML = reportContent;
+    }
+
+    // Simulating lecture and assignment data
+    const lecturesAssignments = [
+        { title: 'Math 101', type: 'Lecture', date: '2025-01-15' },
+        { title: 'Physics Homework', type: 'Assignment', date: '2025-01-18' },
+        { title: 'History 202', type: 'Lecture', date: '2025-01-20' },
+    ];
+
+    function displayLecturesAssignments() {
+        const listElement = document.getElementById('lecturesAssignmentsList');
+        lecturesAssignments.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item.type}: ${item.title} - ${item.date}`;
+            listElement.appendChild(listItem);
+        });
+    }
+
+    // Initialize the page
+    generateWeeklyReport();
+    displayLecturesAssignments();
+
+</script>
+
+</body>
+</html>
