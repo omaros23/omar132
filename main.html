@@ -9,6 +9,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        html {
+            box-sizing: border-box;
         }
         .hero {
             background: #007bff;
@@ -44,7 +48,7 @@
             text-align: center;
             background-color: #fff;
             transition: transform 0.3s;
-            height: 300px; /* تحديد ارتفاع ثابت للمربعات */
+            height: 300px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -66,6 +70,34 @@
             color: #555;
             margin-top: 10px;
         }
+        .about-section {
+            background-color: #f8f9fa;
+            padding: 50px 20px;
+        }
+        .about-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .about-section .about-card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .about-section .about-card:hover {
+            transform: translateY(-5px);
+        }
+        .about-section .about-card h5 {
+            font-size: 1.2rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .about-section .about-card p {
+            font-size: 1rem;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -79,10 +111,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="#Home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="#About">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#services">Services</a>
@@ -96,8 +128,6 @@
     <div class="container">
         <h1>SmartEdu</h1>
         <p>SmartEdu provides innovative and effective educational services designed to help students achieve their academic goals. From personalized learning plans to expert guidance, we are committed to your success.</p>
-        <a href="#" class="btn btn-light">Learn More</a>
-        <a href="#" class="btn btn-primary">Get Started - It's Free</a>
     </div>
 </div>
 
@@ -131,14 +161,14 @@
         <div class="col-md-4 mb-4">
             <div class="service-card">
                 <a href="4.html" class="service-title">Research Paper Upload</a>
-                <p class="service-description">You can add a service to upload research papers by students</p>
+                <p class="service-description">You can add a service to upload research papers by students.</p>
             </div>
         </div>
         <!-- Service 5 -->
         <div class="col-md-4 mb-4">
             <div class="service-card">
                 <a href="5.html" class="service-title">Personal Academic Assistant</a>
-                <p class="service-description"> An interactive AI-based robot that can provide academic advice on how to improve study performance, based on your academic data</p>
+                <p class="service-description">An interactive AI-based robot that can provide academic advice on how to improve study performance, based on your academic data.</p>
             </div>
         </div>
         <!-- Service 6 -->
@@ -153,7 +183,7 @@
         <!-- Service 7 -->
         <div class="col-md-4 mb-4">
             <div class="service-card">
-                <a href="7.html" class="service-title">Lecture and exam management</a>
+                <a href="7.html" class="service-title">Lecture and Exam Management</a>
                 <p class="service-description">A tool for teachers to schedule lectures, add exam questions.</p>
             </div>
         </div>
@@ -169,6 +199,32 @@
             <div class="service-card">
                 <a href="9.html" class="service-title">Academic Tracking</a>
                 <p class="service-description">Monitor their academic progress on an ongoing basis. Includes tracking of grades, lectures, and assignments.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="about-section">
+    <div class="container">
+        <h2>About Us</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="about-card">
+                    <h5>Our Mission</h5>
+                    <p>To empower students and educators by providing them with the resources they need to succeed.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="about-card">
+                    <h5>Our Vision</h5>
+                    <p>To create a world where every learner has equal access to high-quality education, regardless of their location or circumstances.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="about-card">
+                    <h5>Our Team</h5>
+                    <p>Experienced educators, developers, and visionaries working together to revolutionize education.</p>
+                </div>
             </div>
         </div>
     </div>
