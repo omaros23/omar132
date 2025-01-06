@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Materials Library</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .upload-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .upload-section input {
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .upload-section button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .upload-section button:hover {
+            background-color: #45a049;
+        }
+
+        .file-link {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .file-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Study Materials Library</h1>
+
+    <div class="upload-section">
+        <h3>Upload Your Study Materials</h3>
+        <input type="file" id="fileInput" multiple>
+        <button onclick="uploadFiles()">Upload Files</button>
+    </div>
+
+    <table id="materialsTable">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Type</th>
+                <th>Size (KB)</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Files will be dynamically added here -->
+        </tbody>
+    </table>
+
+    <script>
+        let uploadedFiles = [];
+
+        // Function to handle file uploads
+        function uploadFiles() {
+            const fileInput = document.getElementById("fileInput");
+            const files = fileInput.files;
+
+            if (files.length === 0) {
+                alert("Please select at least one file.");
+                return;
+            }
+
+            // Process each file
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+
+                // Store file information (in a real app, you may store this on a server)
+                uploadedFiles.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    url: URL.createObjectURL(file)  // Create a URL for the file to preview it
+                });
+            }
+
+            // Clear file input after upload
+            fileInput.value = "";
+
+            // Display the uploaded files
+            displayUploadedFiles();
+        }
+
+        // Function to display the uploaded files in a table
+        function displayUploadedFiles() {
+            const materialsTable = document.getElementById("materialsTable").getElementsByTagName('tbody')[0];
+            materialsTable.innerHTML = ""; // Clear previous content
+
+            if (uploadedFiles.length === 0) {
+                materialsTable.innerHTML = "<tr><td colspan='4'>No files uploaded yet.</td></tr>";
+                return;
+            }
+
+            uploadedFiles.forEach(file => {
+                const row = materialsTable.insertRow();
+                row.innerHTML = `
+                    <td>${file.name}</td>
+                    <td>${file.type}</td>
+                    <td>${(file.size / 1024).toFixed(2)}</td>
+                    <td><a class="file-link" href="${file.url}" download="${file.name}">Download</a></td>
+                `;
+            });
+        }
+    </script>
+
+</body>
+</html>
