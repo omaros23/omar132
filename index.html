@@ -1,89 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SmartEdu</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-        }
-        .login-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .login-container h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Glassmorphism</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #2f2f2f;
+      background: linear-gradient(to right, #3b3b3b, #2f2f2f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .wrapper {
+      background: rgba(50, 50, 50, 0.7);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      width: 100%;
+      padding: 10px;
+      background: #4b0082;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background: #2e0052;
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .register a {
+      color: #7a4b8b;
+      text-decoration: none;
+    }
+
+    .lang-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: #4b0082;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+
+
+   
+    }
+  </style>
 </head>
 <body>
+  <div class="wrapper">
+   
+    <h2 id="welcomeText">Welcome to Our Website</h2>
+    <button class="button" onclick="window.location.href='crea.html'">Create an Account</button>
+    <div class="register">
+      <p id="alreadyHaveAccount">Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+  </div>
 
-<!-- Login Form -->
-<div class="login-container">
-    <h2>Login to SmartEdu</h2>
-    <form id="loginForm">
-        <div class="mb-3">
-            <label for="userId" class="form-label">User ID</label>
-            <input type="text" class="form-control" id="userId" placeholder="Enter your User ID" required>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter your Password" required>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Login</button>
-    </form>
-    <div id="error-message" class="mt-3 text-danger" style="display: none;">Invalid ID or Password. Please try again.</div>
-</div>
+  <script>
+    function changeLanguage() {
+      var currentLang = document.documentElement.lang;
 
-<!-- Footer -->
-<div class="footer">
-    <p>&copy; 2025 SmartEdu. All rights reserved.</p>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    // Hardcoded user credentials for validation (ID: omar, Password: 123)
-    const validUserId = 'omar';
-    const validPassword = '123';
-
-    // Handle login form submission
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        
-        const userId = document.getElementById('userId').value;
-        const password = document.getElementById('password').value;
-        const errorMessage = document.getElementById('error-message');
-
-        // Check if the entered ID and password match the hardcoded values
-        if (userId === validUserId && password === validPassword) {
-            // Open a new page after successful login
-            window.open("main.html", "_blank"); // Opens in a new tab/window
-        } else {
-            // Show error message if login is invalid
-            errorMessage.style.display = 'block';
-        }
-    });
-</script>
-
+      if (currentLang === "en") {
+        // Switch to Arabic
+        document.documentElement.lang = "ar";
+        document.getElementById("welcomeText").textContent = "مرحبًا بك في موقعنا";
+        document.querySelector("button").textContent = "إنشاء حساب";
+        document.getElementById("alreadyHaveAccount").innerHTML = 'هل لديك حساب؟ <a href="login.html">تسجيل الدخول</a>';
+      } else {
+        // Switch to English
+        document.documentElement.lang = "en";
+        document.getElementById("welcomeText").textContent = "Welcome to Our Website";
+        document.querySelector("button").textContent = "Create an Account";
+        document.getElementById("alreadyHaveAccount").innerHTML = 'Already have an account? <a href="login.html">Log in</a>';
+      }
+    }
+  </script>
 </body>
 </html>
+
+

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Glassmorphism</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+   
+body {
+    font-family: 'Arial', sans-serif;
+    background: #2f2f2f; /* Dark background */
+    background: linear-gradient(to right, #3b3b3b, #2f2f2f); /* Gradient background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .wrapper {
+    background: rgba(50, 50, 50, 0.7); /* Dark transparent background */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px); /* Glass effect */
+    width: 100%;
+    max-width: 400px;
+  }
+
+  h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .input-field {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.4); /* Light transparent background for input fields */
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    color: #fff;
+    font-size: 16px;
+  }
+
+  label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-size: 14px;
+    color: #fff;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #4b0082; /* Dark purple background */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background: #2e0052; /* Darker purple on hover */
+  }
+
+  .register {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .register a {
+    color: #7a4b8b;
+    text-decoration: none;
+  }
+  a.back-to-home {
+  text-decoration: none;
+  color: #7a4b8b;
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+a.back-to-home:hover {
+  color: #4b0082;
+}
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <form onsubmit="registerUser(event)">
+      <h2>Create Account</h2>
+      <div class="input-field">
+        <input type="text" id="username" required />
+        <label>Username</label>
+      </div>
+      <div class="input-field">
+        <input type="password" id="password" required />
+        <label>Password</label>
+      </div>
+      <div class="input-field">
+        <input type="password" id="confirmPassword" required />
+        <label>Confirm Password</label>
+      </div>
+      <button type="submit">Create Account</button>
+      <div class="register">
+        <p>Already have an account? <a href="index.html">Log in</a></p>
+      </div>
+      <div class="register">
+        <a href="index.html" class="back-to-home">Back to Home</a>
+      </div>
+      
+    </form>
+  </div>
+
+  <script>
+    function registerUser(event) {
+      event.preventDefault(); // Prevent form submission
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      // Store the user data in localStorage (for demo purposes)
+      const user = { username, password };
+      localStorage.setItem("user", JSON.stringify(user));
+
+      alert("Account created successfully!");
+
+      // Redirect to login page after successful registration
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
+
+
+
+-----------

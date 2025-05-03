@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In - Glassmorphism</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #2f2f2f; /* Dark background */
+      background: linear-gradient(to right, #3b3b3b, #2f2f2f); /* Gradient background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .wrapper {
+      background: rgba(50, 50, 50, 0.7); /* Dark transparent background */
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px); /* Glass effect */
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-field {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .input-field input {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .input-field label {
+      position: absolute;
+      top: 12px;
+      left: 10px;
+      color: #aaa;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .input-field input:focus + label,
+    .input-field input:not(:placeholder-shown) + label {
+      top: -12px;
+      left: 10px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .button {
+      width: 100%;
+      padding: 10px;
+      background: #4b0082; /* Dark purple background */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background: #2e0052; /* Darker purple on hover */
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .register a {
+      color: #7a4b8b;
+      text-decoration: none;
+    }
+
+    .back-to-home {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-to-home a {
+      color: #7a4b8b;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <form onsubmit="loginUser(event)">
+      <h2>Log In</h2>
+      <div class="input-field">
+        <input type="text" id="username" required />
+        <label>Username</label>
+      </div>
+      <div class="input-field">
+        <input type="password" id="password" required />
+        <label>Password</label>
+      </div>
+      <button type="submit" class="button">Log In</button>
+      <div class="register">
+        <p>Don't have an account? <a href="crea.html">Create Account</a></p>
+      </div>
+      <div class="back-to-home">
+        <p><a href="index.html">Back to Home</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function loginUser(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Retrieve user data from localStorage
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (storedUser && storedUser.username === username && storedUser.password === password) {
+        alert("Logged in successfully!");
+        window.location.href = "main.html"; // Redirect to a protected page
+      } else {
+        alert("Incorrect username or password!");
+      }
+    }
+  </script>
+</body>
+</html>

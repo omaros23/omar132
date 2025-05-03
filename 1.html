@@ -12,24 +12,30 @@
             padding: 20px;
         }
 
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
         h1 {
             text-align: center;
             color: #333;
         }
 
         table {
-            width: 80%;
-            margin: 20px auto;
+            width: 100%;
             border-collapse: collapse;
-            background-color: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
+            margin-top: 20px;
         }
 
         th, td {
-            padding: 10px;
-            text-align: center;
+            padding: 12px;
             border: 1px solid #ddd;
+            text-align: center;
         }
 
         th {
@@ -37,24 +43,23 @@
             color: white;
         }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #e0e0e0;
-        }
-
-        input {
-            width: 90%;
+        select, input {
             padding: 8px;
-            margin: 5px;
             border-radius: 5px;
             border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        input[type="text"] {
+            width: 80px;
+        }
+
+        input[type="number"] {
+            width: 120px;
         }
 
         button {
-            padding: 8px 15px;
+            padding: 10px 15px;
             margin-top: 10px;
             background-color: #4CAF50;
             color: white;
@@ -67,153 +72,53 @@
             background-color: #45a049;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
         }
 
         #result {
             font-size: 18px;
             font-weight: bold;
             text-align: center;
-            color: #333;
-            margin-top: 20px;
-        }
-
-        /* Center the buttons */
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px; /* Space between buttons */
             margin-top: 20px;
         }
     </style>
     <script>
-        // Function to convert grade to letter grade
-        function gradeToLetter(grade) {
-            if (grade >= 97) {
-                return 'A+';
-            } else if (grade >= 94) {
-                return 'A';
-            } else if (grade >= 90) {
-                return 'A-';
-            } else if (grade >= 87) {
-                return 'B+';
-            } else if (grade >= 83) {
-                return 'B';
-            } else if (grade >= 80) {
-                return 'B-';
-            } else if (grade >= 77) {
-                return 'C+';
-            } else if (grade >= 73) {
-                return 'C';
-            } else if (grade >= 70) {
-                return 'C-';
-            } else if (grade >= 67) {
-                return 'D+';
-            } else if (grade >= 63) {
-                return 'D';
-            } else if (grade >= 60) {
-                return 'D-';
-            } else {
-                return 'F';
-            }
-        }
-
-        // Function to calculate GPA based on letter grades
-        function calculateGPA() {
-            let totalGradePoints = 0;
-            let totalCreditHours = 0;
-
-            let table = document.getElementById("gradesTable");
-            let rows = table.getElementsByTagName("tr");
-
-            // Loop through each row in the table (excluding the header row)
-            for (let i = 1; i < rows.length; i++) {
-                let grade = parseFloat(rows[i].cells[0].children[0].value);
-                let creditHour = parseFloat(rows[i].cells[1].children[0].value);
-
-                let gradeLetter = gradeToLetter(grade);
-                let gradePoint = 0;
-
-                // Assign grade points based on letter grades (A+ will be treated as A)
-                switch (gradeLetter) {
-                    case 'A+':
-                    case 'A':
-                        gradePoint = 4.0;
-                        break;
-                    case 'A-':
-                        gradePoint = 3.7;
-                        break;
-                    case 'B+':
-                        gradePoint = 3.3;
-                        break;
-                    case 'B':
-                        gradePoint = 3.0;
-                        break;
-                    case 'B-':
-                        gradePoint = 2.7;
-                        break;
-                    case 'C+':
-                        gradePoint = 2.3;
-                        break;
-                    case 'C':
-                        gradePoint = 2.0;
-                        break;
-                    case 'C-':
-                        gradePoint = 1.7;
-                        break;
-                    case 'D+':
-                        gradePoint = 1.3;
-                        break;
-                    case 'D':
-                        gradePoint = 1.0;
-                        break;
-                    case 'D-':
-                        gradePoint = 0.7;
-                        break;
-                    case 'F':
-                        gradePoint = 0.0;
-                        break;
-                }
-
-                totalGradePoints += gradePoint * creditHour;
-                totalCreditHours += creditHour;
-            }
-
-            let gpa = totalGradePoints / totalCreditHours;
-
-            // Display result
-            document.getElementById("result").innerText = "Your GPA is: " + gpa.toFixed(2);
-        }
-
-        // Function to add new row in the table
         function addRow() {
             let table = document.getElementById("gradesTable");
             let row = table.insertRow();
-            let gradeCell = row.insertCell(0);
-            let creditHourCell = row.insertCell(1);
-            let deleteCell = row.insertCell(2);
+            let subjectCell = row.insertCell(0);
+            let gradeCell = row.insertCell(1);
+            let creditHourCell = row.insertCell(2);
+            let deleteCell = row.insertCell(3);
 
-            // Adding input fields for grade and credit hour
-            gradeCell.innerHTML = '<input type="number" step="0.1" placeholder="Enter grade" required>';
-            creditHourCell.innerHTML = '<input type="number" placeholder="Enter credit hours" required>';
+            subjectCell.innerHTML = '<input type="text" placeholder="Subject" required style="width: 80px;">';
+            gradeCell.innerHTML = `
+                <select>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="B-">B-</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="C-">C-</option>
+                    <option value="D+">D+</option>
+                    <option value="D">D</option>
+                    <option value="D-">D-</option>
+                    <option value="F">F</option>
+                </select>`;
+            
+            creditHourCell.innerHTML = '<input type="number" step="0.5" placeholder="Hrs" required style="width: 120px;">';
             deleteCell.innerHTML = '<button onclick="deleteRow(this)">Delete</button>';
-        }
-
-        // Function to delete a row from the table
-        function deleteRow(button) {
-            let row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
         }
     </script>
 </head>
 <body>
-
     <div class="container">
         <h1>GPA Calculator</h1>
         <p>Enter your grades and credit hours for multiple courses:</p>
@@ -221,6 +126,7 @@
         <table id="gradesTable">
             <thead>
                 <tr>
+                    <th>Subject</th>
                     <th>Grade</th>
                     <th>Credit Hours</th>
                     <th>Actions</th>
@@ -228,21 +134,36 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="number" step="0.1" placeholder="Enter grade" required></td>
-                    <td><input type="number" placeholder="Enter credit hours" required></td>
+                    <td><input type="text" placeholder="Subject" required style="width: 80px;"></td>
+                    <td>
+                        <select>
+                            <option value="A+">A+</option>
+                            <option value="A">A</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B">B</option>
+                            <option value="B-">B-</option>
+                            <option value="C+">C+</option>
+                            <option value="C">C</option>
+                            <option value="C-">C-</option>
+                            <option value="D+">D+</option>
+                            <option value="D">D</option>
+                            <option value="D-">D-</option>
+                            <option value="F">F</option>
+                        </select>
+                    </td>
+                    <td><input type="number" step="0.5" placeholder="Hrs" required style="width: 120px;"></td>
                     <td><button onclick="deleteRow(this)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- Centering the buttons -->
         <div class="button-container">
             <button onclick="addRow()">Add Another Course</button>
             <button onclick="calculateGPA()">Calculate GPA</button>
         </div>
-
+        
         <p id="result"></p>
     </div>
-
 </body>
 </html>
