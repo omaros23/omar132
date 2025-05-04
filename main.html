@@ -1,240 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartEdu</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-        html {
-            box-sizing: border-box;
-        }
-        .hero {
-            background: #007bff;
-            color: #fff;
-            text-align: center;
-            padding: 100px 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        .navbar {
-            background-color: #343a40;
-        }
-        .footer {
-            background-color: #343a40;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
-        .service-card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            background-color: #fff;
-            transition: transform 0.3s;
-            height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-        .service-title {
-            font-size: 1.25rem;
-            color: #007bff;
-            margin-top: 10px;
-            text-decoration: none;
-        }
-        .service-title:hover {
-            text-decoration: underline;
-        }
-        .service-description {
-            font-size: 1rem;
-            color: #555;
-            margin-top: 10px;
-        }
-        .about-section {
-            background-color: #f8f9fa;
-            padding: 50px 20px;
-        }
-        .about-section h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .about-section .about-card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            background-color: #fff;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .about-section .about-card:hover {
-            transform: translateY(-5px);
-        }
-        .about-section .about-card h5 {
-            font-size: 1.2rem;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-        .about-section .about-card p {
-            font-size: 1rem;
-            color: #555;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartEdu</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0d1b2a;
+      color: #ffffff;
+      margin: 0;
+    }
+    .navbar {
+      background-color: #1b263b;
+    }
+    .navbar .nav-link {
+      color: #ffffff;
+    }
+    .navbar .nav-link:hover {
+      color: #00b4d8;
+    }
+    .hero {
+      background: #1b263b;
+      color: #ffffff;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    #services, #about {
+      background-color: #0d1b2a;
+      padding: 60px 20px;
+    }
+    .service-card, .about-card {
+      background-color: #1b263b;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      text-align: center;
+      color: #ffffff;
+      transition: transform 0.3s;
+      height: 100%;
+    }
+    .service-card:hover, .about-card:hover {
+      transform: translateY(-5px);
+    }
+    .service-title {
+      font-size: 1.25rem;
+      color: #00b4d8;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .service-title:hover {
+      text-decoration: underline;
+    }
+    .service-description, .about-description {
+      font-size: 1rem;
+      color: #cfd8dc;
+    }
+    .footer {
+      background-color: #1b263b;
+      color: #ffffff;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .service-card img {
+      max-height: 150px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    /* Notification bell styles */
+    .notification-bell {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.5rem;
+      margin-left: 15px;
+      color: #ffffff;
+    }
+
+    .dropdown-notifications {
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background-color: #1b263b;
+      color: #ffffff;
+      width: 300px;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 10px;
+      z-index: 9999;
+      display: none;
+    }
+
+    .notification-item {
+      padding: 10px;
+      border-bottom: 1px solid #2a3c4f;
+    }
+
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+
+    .notification-item a {
+      color: #00b4d8;
+      text-decoration: none;
+    }
+
+    .notification-item a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">SmartEdu</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#Home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#About">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#services">Services</a>
-                </li>
-            </ul>
-        </div>
+  <div class="container">
+    <a class="navbar-brand" href="#">SmartEdu</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#Home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.html">Logout</a>
+        </li>
+        <li class="nav-item">
+          <div class="notification-bell" onclick="toggleNotifications()">🔔</div>
+          <div class="dropdown-notifications" id="notificationList"></div>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
 
 <div class="hero">
-    <div class="container">
-        <h1>SmartEdu</h1>
-        <p>SmartEdu provides innovative and effective educational services designed to help students achieve their academic goals. From personalized learning plans to expert guidance, we are committed to your success.</p>
-    </div>
+  <div class="container">
+    <h1>SmartEdu</h1>
+    <p>SmartEdu provides innovative and effective educational services designed to help students achieve their academic goals.</p>
+  </div>
 </div>
 
 <div id="services" class="container py-5">
-    <h2 class="text-center mb-4">Services</h2>
-    <div class="row">
-        <!-- Service 1 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="1.html" class="service-title">GPA Calculator</a>
-                <p class="service-description">Calculate your GPA quickly and easily.</p>
-            </div>
-        </div>
-        <!-- Service 2 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="2.html" class="service-title">Study Planner</a>
-                <p class="service-description">Plan and organize your study schedule.</p>
-            </div>
-        </div>
-        <!-- Service 3 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="3.html" class="service-title">Study Materials Library</a>
-                <p class="service-description">A Study Materials Library provides quick access to organized resources, boosting learning efficiency.</p>
-            </div>
-        </div>
+  <h2 class="text-center mb-4">Services</h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="service-card">
+        <a href="1.html" class="service-title">GPA Calculator</a>
+        <img src="imgs/1.png" alt="GPA Calculator" class="img-fluid" />
+        <p class="service-description">Calculate your GPA quickly and easily.</p>
+      </div>
     </div>
-    <div class="row">
-        <!-- Service 4 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="4.html" class="service-title">Research Paper Upload</a>
-                <p class="service-description">You can add a service to upload research papers by students.</p>
-            </div>
-        </div>
-        <!-- Service 5 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="5.html" class="service-title">Personal Academic Assistant</a>
-                <p class="service-description">An interactive AI-based robot that can provide academic advice on how to improve study performance, based on your academic data.</p>
-            </div>
-        </div>
-        <!-- Service 6 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="6.html" class="service-title">Mock Exams</a>
-                <p class="service-description">Simulation of university or school tests.</p>
-            </div>
-        </div>
+    <div class="col-md-4">
+      <div class="service-card">
+        <a href="2.html" class="service-title">Study Planner</a>
+        <img src="imgs/download.png" alt="Study Planner" class="img-fluid" />
+        <p class="service-description">Plan and organize your study schedule.</p>
+      </div>
     </div>
-    <div class="row">
-        <!-- Service 7 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="7.html" class="service-title">Lecture and Exam Management</a>
-                <p class="service-description">A tool for teachers to schedule lectures, add exam questions.</p>
-            </div>
-        </div>
-        <!-- Service 8 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="8.html" class="service-title">Digital Library</a>
-                <p class="service-description">An online library containing textbooks, educational videos, research papers, and academic resources.</p>
-            </div>
-        </div>
-        <!-- Service 9 -->
-        <div class="col-md-4 mb-4">
-            <div class="service-card">
-                <a href="9.html" class="service-title">Academic Tracking</a>
-                <p class="service-description">Monitor their academic progress on an ongoing basis. Includes tracking of grades, lectures, and assignments.</p>
-            </div>
-        </div>
+    <div class="col-md-4">
+      <div class="service-card">
+        <a href="3.html" class="service-title">Study Materials Library</a>
+        <img src="imgs/3.jfif" alt="Study Materials Library" class="img-fluid" />
+        <p class="service-description">A library of organized study resources to enhance learning efficiency.</p>
+      </div>
     </div>
+  </div>
 </div>
 
-<div class="about-section">
-    <div class="container">
-        <h2>About Us</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="about-card">
-                    <h5>Our Mission</h5>
-                    <p>To empower students and educators by providing them with the resources they need to succeed.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="about-card">
-                    <h5>Our Vision</h5>
-                    <p>To create a world where every learner has equal access to high-quality education, regardless of their location or circumstances.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="about-card">
-                    <h5>Our Team</h5>
-                    <p>Experienced educators, developers, and visionaries working together to revolutionize education.</p>
-                </div>
-            </div>
-        </div>
+<div id="about" class="container py-5">
+  <h2 class="text-center mb-4">About Us</h2>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4">
+      <div class="about-card">
+        <h5>Our Mission</h5>
+        <p class="about-description">To empower students with tools and resources that make academic success achievable and enjoyable.</p>
+      </div>
     </div>
+    <div class="col-md-4">
+      <div class="about-card">
+        <h5>Our Vision</h5>
+        <p class="about-description">To be the leading platform for student educational support through innovative technology and expert guidance.</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="footer">
-    <p>&copy; 2025 SmartEdu. All rights reserved.</p>
+  <p>&copy; 2025 SmartEdu. All rights reserved.</p>
 </div>
 
-<!-- Bootstrap JS -->
+<script>
+function toggleNotifications() {
+  const dropdown = document.getElementById("notificationList");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+function loadNotifications() {
+  const notifications = [
+    {
+      title: "New Study Material Available",
+      description: "Updated",
+      link: "#",
+      time: "10 minutes ago"
+    },
+    {
+      title: "Upcoming Exam",
+      description: "Updated",
+      link: "#",
+      time: "1 hour ago"
+    },
+    {
+      title: "New GPA Calculation Feature",
+      description: "Updated",
+      link: "#",
+      time: "2 hours ago"
+    }
+  ];
+
+  const container = document.getElementById("notificationList");
+  container.innerHTML = "";
+
+  notifications.forEach(notif => {
+    const item = document.createElement("div");
+    item.className = "notification-item";
+    item.innerHTML = `
+      <a href="${notif.link}" target="_blank"><strong>${notif.title}</strong></a>
+      <div>${notif.description}</div>
+      <small>${notif.time}</small>
+    `;
+    container.appendChild(item);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", loadNotifications);
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

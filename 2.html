@@ -4,48 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Planner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
             margin: 0;
             padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: inherit;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        }
+
+        body.dark .container {
+            background-color: #2c2c2c;
         }
 
         .task-form {
             margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
         }
 
-        .task-form input[type="text"],
-        .task-form input[type="date"],
+        .task-form input,
+        .task-form select,
         .task-form button {
             padding: 10px;
-            margin: 10px;
             border-radius: 5px;
             border: 1px solid #ccc;
-        }
-
-        .task-form input[type="text"] {
-            width: 50%;
-        }
-
-        .task-form input[type="date"] {
-            width: 30%;
+            flex: 1;
         }
 
         button {
@@ -70,29 +77,53 @@
             text-align: center;
         }
 
-        .delete-btn {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+        .delete-btn, .done-btn, .edit-btn {
+            margin: 0 5px;
             padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            color: white;
         }
 
-        .delete-btn:hover {
-            background-color: #d32f2f;
+        .delete-btn { background-color: #f44336; }
+        .delete-btn:hover { background-color: #d32f2f; }
+        .done-btn { background-color: #2196F3; }
+        .done-btn:hover { background-color: #1976d2; }
+        .edit-btn { background-color: #FF9800; }
+        .edit-btn:hover { background-color: #fb8c00; }
+
+        .done-task {
+            background-color: #d3ffd3 !important;
+        }
+
+        #darkModeToggle {
+            float: right;
+            margin: 10px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        canvas {
+            max-width: 100%;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
-
+    <button id="darkModeToggle"> Dark Mode 🌙</button>
     <div class="container">
         <h1>Study Planner</h1>
-
         <div class="task-form">
             <input type="text" id="taskName" placeholder="Enter task name" required>
             <input type="date" id="taskDate" required>
+            <select id="taskCategory">
+                <option value="Academic">Academic</option>
+                <option value="Personal">Personal</option>
+                <option value="Urgent">Urgent</option>
+            </select>
             <button onclick="addTask()">Add Task</button>
+            <button onclick="exportTasks()"><i class="fa-solid fa-download"></i> Export</button>
+            <input type="file" id="importFile" onchange="importTasks()">
         </div>
 
         <table id="taskTable">
@@ -100,79 +131,182 @@
                 <tr>
                     <th>Task Name</th>
                     <th>Due Date</th>
+                    <th>Category</th>
+                    <th>Days Left</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Tasks will appear here -->
-            </tbody>
+            <tbody></tbody>
         </table>
+
+        <canvas id="productivityChart" height="100"></canvas>
     </div>
 
     <script>
-        // Load tasks from Local Storage when the page loads
-        window.onload = function() {
+        let darkMode = false;
+
+        document.getElementById("darkModeToggle").onclick = () => {
+            darkMode = !darkMode;
+            document.body.classList.toggle("dark");
+        }
+
+        window.onload = () => {
             loadTasks();
-        }
+            renderChart();
+        };
 
-        // Function to load tasks from Local Storage
         function loadTasks() {
-            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-            let table = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
-            tasks.forEach(function(task) {
-                let newRow = table.insertRow();
-
-                let taskNameCell = newRow.insertCell(0);
-                let taskDateCell = newRow.insertCell(1);
-                let deleteCell = newRow.insertCell(2);
-
-                taskNameCell.textContent = task.name;
-                taskDateCell.textContent = task.date;
-                deleteCell.innerHTML = `<button class="delete-btn" onclick="deleteTask(this)">Delete</button>`;
-            });
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            const tbody = document.getElementById("taskTable").querySelector("tbody");
+            tbody.innerHTML = "";
+            tasks.forEach(task => appendTaskToTable(task));
         }
 
-        // Function to add a new task to Local Storage and display it
         function addTask() {
-            let taskName = document.getElementById("taskName").value;
-            let taskDate = document.getElementById("taskDate").value;
+            const name = document.getElementById("taskName").value;
+            const date = document.getElementById("taskDate").value;
+            const category = document.getElementById("taskCategory").value;
 
-            if (taskName && taskDate) {
-                let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-                tasks.push({ name: taskName, date: taskDate });
+            if (name && date) {
+                const task = { name, date, category, done: false };
+                const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                tasks.push(task);
                 localStorage.setItem("tasks", JSON.stringify(tasks));
-
-                let table = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
-                let newRow = table.insertRow();
-
-                let taskNameCell = newRow.insertCell(0);
-                let taskDateCell = newRow.insertCell(1);
-                let deleteCell = newRow.insertCell(2);
-
-                taskNameCell.textContent = taskName;
-                taskDateCell.textContent = taskDate;
-                deleteCell.innerHTML = `<button class="delete-btn" onclick="deleteTask(this)">Delete</button>`;
-
+                appendTaskToTable(task);
                 document.getElementById("taskName").value = '';
                 document.getElementById("taskDate").value = '';
+                renderChart();
             } else {
-                alert("Please fill in both fields!");
+                alert("Please fill all fields");
             }
         }
 
-        // Function to delete a task from Local Storage and the table
-        function deleteTask(button) {
-            let row = button.parentNode.parentNode;
-            let taskName = row.cells[0].textContent;
-            let taskDate = row.cells[1].textContent;
+        function appendTaskToTable(task) {
+            const tbody = document.getElementById("taskTable").querySelector("tbody");
+            const row = tbody.insertRow();
 
-            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-            tasks = tasks.filter(task => task.name !== taskName || task.date !== taskDate);
-            localStorage.setItem("tasks", JSON.stringify(tasks));
+            row.className = task.done ? "done-task" : "";
 
-            row.parentNode.removeChild(row);
+            row.innerHTML = `
+                <td>${task.name}</td>
+                <td>${task.date}</td>
+                <td>${task.category}</td>
+                <td>${getCountdown(task.date)}</td>
+                <td>
+                    <button class="done-btn" onclick="markDone(this)">✅</button>
+                    <button class="edit-btn" onclick="editTask(this)">✏️</button>
+                    <button class="delete-btn" onclick="deleteTask(this)">🗑️</button>
+                </td>
+            `;
+        }
+
+        function getCountdown(date) {
+            const now = new Date();
+            const target = new Date(date);
+            const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+            return diff >= 0 ? `باقي ${diff} يوم` : "انتهى";
+        }
+
+        function deleteTask(btn) {
+            const row = btn.closest("tr");
+            const name = row.cells[0].textContent;
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            const updated = tasks.filter(t => t.name !== name);
+            localStorage.setItem("tasks", JSON.stringify(updated));
+            row.remove();
+            renderChart();
+        }
+
+        function markDone(btn) {
+            const row = btn.closest("tr");
+            row.classList.add("done-task");
+            btn.disabled = true;
+
+            const name = row.cells[0].textContent;
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            const index = tasks.findIndex(t => t.name === name);
+            if (index !== -1) {
+                tasks[index].done = true;
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+            }
+            renderChart();
+        }
+
+        function editTask(btn) {
+            const row = btn.closest("tr");
+            const name = prompt("Edit task name", row.cells[0].textContent);
+            const date = prompt("Edit date", row.cells[1].textContent);
+
+            if (name && date) {
+                const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                const index = tasks.findIndex(t => t.name === row.cells[0].textContent);
+                if (index !== -1) {
+                    tasks[index].name = name;
+                    tasks[index].date = date;
+                    localStorage.setItem("tasks", JSON.stringify(tasks));
+                }
+                loadTasks();
+            }
+        }
+
+        function exportTasks() {
+            const tasks = localStorage.getItem("tasks");
+            const blob = new Blob([tasks], { type: 'application/json' });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "tasks.json";
+            a.click();
+        }
+
+        function importTasks() {
+            const file = document.getElementById("importFile").files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem("tasks", e.target.result);
+                    loadTasks();
+                    renderChart();
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function renderChart() {
+            const ctx = document.getElementById('productivityChart').getContext('2d');
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            const weekMap = {};
+
+            tasks.forEach(task => {
+                if (task.done) {
+                    const week = new Date(task.date).toLocaleDateString('en-GB', { week: 'numeric', year: 'numeric' });
+                    weekMap[week] = (weekMap[week] || 0) + 1;
+                }
+            });
+
+            const labels = Object.keys(weekMap);
+            const data = Object.values(weekMap);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'عدد المهام المنجزة أسبوعيًا',
+                        data,
+                        backgroundColor: '#4CAF50'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'الإنتاجية الأسبوعية' }
+                    }
+                }
+            });
         }
     </script>
-
 </body>
 </html>
+
+

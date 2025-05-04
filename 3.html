@@ -1,164 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Materials Library</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مخطط الدراسة</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f9fb;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
 
-        .upload-section {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .task-form {
+      max-width: 500px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
 
-        .upload-section input {
-            font-size: 16px;
-            padding: 10px;
-            margin-top: 10px;
-        }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
 
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
 
-        table, th, td {
-            border: 1px solid #ccc;
-        }
+    button:hover {
+      background-color: #2980b9;
+    }
 
-        th, td {
-            padding: 12px;
-            text-align: center;
-        }
+    .task-list {
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
+    .task-item {
+      background: #ecf0f1;
+      margin: 10px 0;
+      padding: 15px;
+      border-left: 5px solid #3498db;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+    .task-item.done {
+      background: #d4edda;
+      border-color: #27ae60;
+      text-decoration: line-through;
+    }
 
-        tr:hover {
-            background-color: #ddd;
-        }
+    .reminder {
+      background: #f1c40f;
+      color: #222;
+      padding: 12px;
+      margin: 15px auto;
+      border-radius: 8px;
+      border: 2px solid #555;
+      max-width: 600px;
+      font-size: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
 
-        .upload-section button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .upload-section button:hover {
-            background-color: #45a049;
-        }
-
-        .file-link {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-
-        .file-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+    .task-actions button {
+      margin-left: 5px;
+    }
+  </style>
 </head>
 <body>
 
-    <h1>Study Materials Library</h1>
+  <h1>📚 مخطط الدراسة</h1>
 
-    <div class="upload-section">
-        <h3>Upload Your Study Materials</h3>
-        <input type="file" id="fileInput" multiple>
-        <button onclick="uploadFiles()">Upload Files</button>
-    </div>
+  <div class="task-form">
+    <input type="text" id="taskName" placeholder="اسم المهمة">
+    <input type="date" id="taskDate">
+    <button onclick="addTask()">➕ إضافة المهمة</button>
+  </div>
 
-    <table id="materialsTable">
-        <thead>
-            <tr>
-                <th>File Name</th>
-                <th>Type</th>
-                <th>Size (KB)</th>
-                <th>Download</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Files will be dynamically added here -->
-        </tbody>
-    </table>
+  <div class="task-list" id="taskList"></div>
 
-    <script>
-        let uploadedFiles = [];
+  <script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-        // Function to handle file uploads
-        function uploadFiles() {
-            const fileInput = document.getElementById("fileInput");
-            const files = fileInput.files;
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
 
-            if (files.length === 0) {
-                alert("Please select at least one file.");
-                return;
-            }
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+      if (tasks.length === 0) {
+        taskList.innerHTML = "<p style='text-align:center;'>لا توجد مهام بعد.</p>";
+        return;
+      }
 
-            // Process each file
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
+      tasks.forEach((task, index) => {
+        const taskEl = document.createElement("div");
+        taskEl.className = "task-item" + (task.done ? " done" : "");
+        taskEl.innerHTML = `
+          <div>
+            <strong>${task.name}</strong><br>
+            📅 ${task.deadline}
+          </div>
+          <div class="task-actions">
+            <button onclick="markDone(${index})">✅</button>
+            <button onclick="deleteTask(${index})">🗑️</button>
+          </div>
+        `;
+        taskList.appendChild(taskEl);
+      });
+    }
 
-                // Store file information (in a real app, you may store this on a server)
-                uploadedFiles.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                    url: URL.createObjectURL(file)  // Create a URL for the file to preview it
-                });
-            }
+    function addTask() {
+      const name = document.getElementById("taskName").value.trim();
+      const date = document.getElementById("taskDate").value;
+      if (!name || !date) {
+        alert("يرجى إدخال اسم المهمة والتاريخ.");
+        return;
+      }
 
-            // Clear file input after upload
-            fileInput.value = "";
+      tasks.push({ name, deadline: date, done: false });
+      saveTasks();
+      renderTasks();
+      document.getElementById("taskName").value = "";
+      document.getElementById("taskDate").value = "";
+    }
 
-            // Display the uploaded files
-            displayUploadedFiles();
+    function markDone(index) {
+      tasks[index].done = !tasks[index].done;
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      if (confirm("هل أنت متأكد من حذف المهمة؟")) {
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    // 🔔 إشعار بالمتصفح + تذكير مرئي عند بقاء يوم أو أقل
+    function checkUpcomingTasks() {
+      const today = new Date();
+      tasks.forEach(task => {
+        if (!task.deadline || task.done) return;
+        const dueDate = new Date(task.deadline);
+        const diffTime = dueDate - today;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 1 || (diffDays === 0 && dueDate > today)) {
+          showReminder(task.name, task.deadline);
+          showNotification(task.name, task.deadline);
         }
+      });
+    }
 
-        // Function to display the uploaded files in a table
-        function displayUploadedFiles() {
-            const materialsTable = document.getElementById("materialsTable").getElementsByTagName('tbody')[0];
-            materialsTable.innerHTML = ""; // Clear previous content
+    function showReminder(name, deadline) {
+      const reminder = document.createElement("div");
+      reminder.className = "reminder";
+      reminder.innerHTML = `📢 <strong>تذكير:</strong> المهمة "<strong>${name}</strong>" يجب إنجازها قبل <strong>${deadline}</strong>!`;
+      document.body.prepend(reminder);
+    }
 
-            if (uploadedFiles.length === 0) {
-                materialsTable.innerHTML = "<tr><td colspan='4'>No files uploaded yet.</td></tr>";
-                return;
-            }
+    function showNotification(name, deadline) {
+      if (Notification.permission === "granted") {
+        new Notification("📌 تذكير دراسي", {
+          body: `المهمة "${name}" يجب إنجازها قبل ${deadline}!`,
+          icon: "https://cdn-icons-png.flaticon.com/512/1077/1077976.png"
+        });
+      }
+    }
 
-            uploadedFiles.forEach(file => {
-                const row = materialsTable.insertRow();
-                row.innerHTML = `
-                    <td>${file.name}</td>
-                    <td>${file.type}</td>
-                    <td>${(file.size / 1024).toFixed(2)}</td>
-                    <td><a class="file-link" href="${file.url}" download="${file.name}">Download</a></td>
-                `;
-            });
-        }
-    </script>
+    // 🚀 البداية
+    window.addEventListener("DOMContentLoaded", () => {
+      renderTasks();
+      if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+        Notification.requestPermission();
+      }
+      checkUpcomingTasks();
+    });
+  </script>
 
 </body>
 </html>
