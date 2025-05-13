@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Glassmorphism</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #2f2f2f;
+      background: linear-gradient(to right, #3b3b3b, #2f2f2f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .wrapper {
+      background: rgba(50, 50, 50, 0.7);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      width: 100%;
+      padding: 10px;
+      background: #4b0082;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background: #2e0052;
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .register a {
+      color: #7a4b8b;
+      text-decoration: none;
+    }
+
+    .lang-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: #4b0082;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+
+
+   
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+   
+    <h2 id="welcomeText">Welcome to Our Website</h2>
+    <button class="button" onclick="window.location.href='crea.html'">Create an Account</button>
+    <div class="register">
+      <p id="alreadyHaveAccount">Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+  </div>
+
+  <script>
+    function changeLanguage() {
+      var currentLang = document.documentElement.lang;
+
+      if (currentLang === "en") {
+        // Switch to Arabic
+        document.documentElement.lang = "ar";
+        document.getElementById("welcomeText").textContent = "مرحبًا بك في موقعنا";
+        document.querySelector("button").textContent = "إنشاء حساب";
+        document.getElementById("alreadyHaveAccount").innerHTML = 'هل لديك حساب؟ <a href="login.html">تسجيل الدخول</a>';
+      } else {
+        // Switch to English
+        document.documentElement.lang = "en";
+        document.getElementById("welcomeText").textContent = "Welcome to Our Website";
+        document.querySelector("button").textContent = "Create an Account";
+        document.getElementById("alreadyHaveAccount").innerHTML = 'Already have an account? <a href="login.html">Log in</a>';
+      }
+    }
+  </script>
+</body>
+</html>
+
+

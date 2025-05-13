@@ -1,111 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Glassmorphism</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartEdu</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #2f2f2f;
-      background: linear-gradient(to right, #3b3b3b, #2f2f2f);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #0d1b2a;
+      color: #ffffff;
       margin: 0;
     }
-
-    .wrapper {
-      background: rgba(50, 50, 50, 0.7);
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      width: 100%;
-      max-width: 400px;
+    .navbar {
+      background-color: #1b263b;
     }
-
-    h2 {
-      color: #fff;
+    .navbar .nav-link {
+      color: #ffffff;
+    }
+    .navbar .nav-link:hover {
+      color: #00b4d8;
+    }
+    .hero {
+      background: #1b263b;
+      color: #ffffff;
       text-align: center;
-      margin-bottom: 20px;
+      padding: 80px 20px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    #services, #about {
+      background-color: #0d1b2a;
+      padding: 60px 20px;
+    }
+    .service-card, .about-card {
+      background-color: #1b263b;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      text-align: center;
+      color: #ffffff;
+      transition: transform 0.3s;
+      height: 100%;
+    }
+    .service-card:hover, .about-card:hover {
+      transform: translateY(-5px);
+    }
+    .service-title {
+      font-size: 1.25rem;
+      color: #00b4d8;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .service-title:hover {
+      text-decoration: underline;
+    }
+    .service-description, .about-description {
+      font-size: 1rem;
+      color: #cfd8dc;
+    }
+    .footer {
+      background-color: #1b263b;
+      color: #ffffff;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .service-card img {
+      max-height: 150px;
+      object-fit: contain;
+      margin-bottom: 15px;
     }
 
-    .button {
-      width: 100%;
-      padding: 10px;
-      background: #4b0082;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
+    /* Notification bell styles */
+    .notification-bell {
+      position: relative;
       cursor: pointer;
-      transition: background-color 0.3s;
+      font-size: 1.5rem;
+      margin-left: 15px;
+      color: #ffffff;
     }
 
-    .button:hover {
-      background: #2e0052;
+    .dropdown-notifications {
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background-color: #1b263b;
+      color: #ffffff;
+      width: 300px;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 10px;
+      z-index: 9999;
+      display: none;
     }
 
-    .register {
-      text-align: center;
-      margin-top: 20px;
+    .notification-item {
+      padding: 10px;
+      border-bottom: 1px solid #2a3c4f;
     }
 
-    .register a {
-      color: #7a4b8b;
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+
+    .notification-item a {
+      color: #00b4d8;
       text-decoration: none;
     }
 
-    .lang-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 10px 20px;
-      background-color: #4b0082;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-
-
-
-   
+    .notification-item a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-   
-    <h2 id="welcomeText">Welcome to Our Website</h2>
-    <button class="button" onclick="window.location.href='crea.html'">Create an Account</button>
-    <div class="register">
-      <p id="alreadyHaveAccount">Already have an account? <a href="login.html">Log in</a></p>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">SmartEdu</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#Home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.html">login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.html">logout</a>
+        </li>
+        <li class="nav-item">
+          <div class="notification-bell" onclick="toggleNotifications()">🔔</div>
+          <div class="dropdown-notifications" id="notificationList"></div>
+        </li>
+      </ul>
     </div>
   </div>
+</nav>
 
-  <script>
-    function changeLanguage() {
-      var currentLang = document.documentElement.lang;
+<div class="hero">
+  <div class="container">
+    <h1>SmartEdu</h1>
+    <p>SmartEdu provides innovative and effective educational services designed to help students achieve their academic goals.</p>
+  </div>
+</div>
 
-      if (currentLang === "en") {
-        // Switch to Arabic
-        document.documentElement.lang = "ar";
-        document.getElementById("welcomeText").textContent = "مرحبًا بك في موقعنا";
-        document.querySelector("button").textContent = "إنشاء حساب";
-        document.getElementById("alreadyHaveAccount").innerHTML = 'هل لديك حساب؟ <a href="login.html">تسجيل الدخول</a>';
-      } else {
-        // Switch to English
-        document.documentElement.lang = "en";
-        document.getElementById("welcomeText").textContent = "Welcome to Our Website";
-        document.querySelector("button").textContent = "Create an Account";
-        document.getElementById("alreadyHaveAccount").innerHTML = 'Already have an account? <a href="login.html">Log in</a>';
-      }
+<div id="services" class="container py-5">
+  <h2 class="text-center mb-4">Services</h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="service-card">
+        <a href="1.html" class="service-title">GPA Calculator</a>
+        <img src="imgs/1.png" alt="GPA Calculator" class="img-fluid" />
+        <p class="service-description">Calculate your GPA quickly and easily.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="service-card">
+        <a href="2.html" class="service-title">Study Planner</a>
+        <img src="imgs/download.png" alt="Study Planner" class="img-fluid" />
+        <p class="service-description">Plan and organize your study schedule.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="service-card">
+        <a href="3.html" class="service-title">Study Materials Library</a>
+        <img src="imgs/3.jfif" alt="Study Materials Library" class="img-fluid" />
+        <p class="service-description">A library of organized study resources to enhance learning efficiency.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="about" class="container py-5">
+  <h2 class="text-center mb-4">About Us</h2>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4">
+      <div class="about-card">
+        <h5>Our Mission</h5>
+        <p class="about-description">To empower students with tools and resources that make academic success achievable and enjoyable.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="about-card">
+        <h5>Our Vision</h5>
+        <p class="about-description">To be the leading platform for student educational support through innovative technology and expert guidance.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>&copy; 2025 SmartEdu. All rights reserved.</p>
+</div>
+
+<script>
+function toggleNotifications() {
+  const dropdown = document.getElementById("notificationList");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+function loadNotifications() {
+  const notifications = [
+    {
+      title: "New Study Material Available",
+      description: "Updated",
+      link: "#",
+      time: "10 minutes ago"
+    },
+    {
+      title: "Upcoming Exam",
+      description: "Updated",
+      link: "#",
+      time: "1 hour ago"
+    },
+    {
+      title: "New GPA Calculation Feature",
+      description: "Updated",
+      link: "#",
+      time: "2 hours ago"
     }
-  </script>
+  ];
+
+  const container = document.getElementById("notificationList");
+  container.innerHTML = "";
+
+  notifications.forEach(notif => {
+    const item = document.createElement("div");
+    item.className = "notification-item";
+    item.innerHTML = `
+      <a href="${notif.link}" target="_blank"><strong>${notif.title}</strong></a>
+      <div>${notif.description}</div>
+      <small>${notif.time}</small>
+    `;
+    container.appendChild(item);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", loadNotifications);
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
