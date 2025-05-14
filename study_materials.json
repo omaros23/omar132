@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Fluid Mechanics Notes",
+        "description": "New detailed notes added for Fluid Mechanics.",
+        "time": "Added 2 hours ago",
+        "link": "materials/fluid_mechanics.pdf"
+    },
+    {
+        "title": "Stress Analysis Sheet",
+        "description": "New practice sheet on stress analysis problems.",
+        "time": "Added yesterday",
+        "link": "materials/stress_analysis.pdf"
+    },
+    {
+        "title": "Control Systems Guide",
+        "description": "Updated guide on control systems with solved examples.",
+        "time": "Updated 3 days ago",
+        "link": "materials/control_systems.pdf"
+    }
+]

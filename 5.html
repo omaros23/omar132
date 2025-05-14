@@ -1,106 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Academic Assistant - SmartEdu</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .footer {
-            background-color: #343a40;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
-        .service-detail {
-            margin-top: 50px;
-            padding: 30px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-        .service-detail h2 {
-            color: #007bff;
-        }
-        .service-detail .description {
-            font-size: 1.1rem;
-            color: #555;
-        }
-        .service-detail .gpa-form input,
-        .service-detail .gpa-form button {
-            font-size: 1rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Tutoring</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .card {
+      border-radius: 1rem;
+      padding: 2rem;
+      background-color: #ffffff;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+    .tutor-card {
+      border: 1px solid #dee2e6;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .btn-custom {
+      background-color: #198754;
+      color: white;
+      border-radius: 25px;
+    }
+  </style>
 </head>
 <body>
-
-<div class="container service-detail">
-    <h2>Personal Academic Assistant</h2>
-    <p class="description">An interactive AI-based robot that can provide academic advice on how to improve study performance, based on your academic data.</p>
-    
-    <h3>Providing suggestions based on GPA and previous grades</h3>
-    <p class="description">The robot analyzes your academic history and provides suggestions tailored to your academic needs. Based on your GPA, it will offer recommendations on how to improve performance in difficult subjects.</p>
-
-    <div class="gpa-form mt-4">
-        <h4>Calculate and analyze your GPA</h4>
-        <form id="gpaForm">
-            <div class="mb-3">
-                <label for="gpaInput" class="form-label">Enter your GPA:</label>
-                <input type="number" class="form-control" id="gpaInput" placeholder="e.g., 3.5" required>
-            </div>
-            <div class="mb-3">
-                <label for="gradesInput" class="form-label">Enter your previous grades (e.g., 90, 85, 75):</label>
-                <input type="text" class="form-control" id="gradesInput" placeholder="First semester, second semester, etc." required>
-            </div>
-            <button type="submit" class="btn btn-primary">Analyze GPA</button>
-        </form>
+  <div class="container py-5">
+    <div class="card mx-auto" style="max-width: 700px;">
+      <h1 class="mb-4 text-center text-success">Online Tutoring</h1>
+      <p>Connect with top tutors for personalized learning sessions:</p>
+      <div class="tutor-card">
+        <strong>👩‍🏫 Sarah Ahmed</strong> – Math & Physics | ⭐ 4.9
+      </div>
+      <div class="tutor-card">
+        <strong>🧑‍🏫 Omar Nasser</strong> – English & Essay Writing | ⭐ 4.8
+      </div>
+      <div class="tutor-card">
+        <strong>👨‍🏫 Laila Mostafa</strong> – Chemistry & Biology | ⭐ 4.7
+      </div>
+      <p class="mt-4">Choose your subject and schedule a session with a tutor!</p>
+      <a href="#" class="btn btn-custom w-100">Book a Session</a>
     </div>
-
-    <div id="gpaResult" class="mt-4" style="display: none;">
-        <h5>GPA Analysis Result</h5>
-        <p id="gpaAnalysis"></p>
-    </div>
-</div>
-
-
-
-<!-- Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    document.getElementById('gpaForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        const gpa = parseFloat(document.getElementById('gpaInput').value);
-        const grades = document.getElementById('gradesInput').value.split(',').map(Number);
-        
-        // Calculate the average of the grades
-        const averageGrade = grades.reduce((acc, grade) => acc + grade, 0) / grades.length;
-        
-        let advice = '';
-        
-        // Provide suggestions based on GPA
-        if (gpa >= 3.5 && gpa <= 4) {
-            advice = 'Your GPA is excellent! Keep up the hard work, but try to improve your grades in more challenging subjects.';
-        } else if (gpa >= 2.5 && gpa < 3.5) {
-            advice = 'Your GPA is good. Try to improve your grades in core subjects to achieve better success.';
-        } else if (gpa >= 1 && gpa < 2.5) {
-            advice = 'Your GPA is low. We recommend speaking to your teacher for additional support and focusing more on your studies.';
-        }
-
-        document.getElementById('gpaResult').style.display = 'block';
-        document.getElementById('gpaAnalysis').innerText = `Average grade: ${averageGrade.toFixed(2)}\n${advice}`;
-        
-        // Text-to-speech for the entered GPA and grades
-        const speech = new SpeechSynthesisUtterance();
-        speech.text = `Your entered GPA is ${gpa}. Your average grade is ${averageGrade.toFixed(2)}. ${advice}`;
-        speech.lang = "en-US";
-        window.speechSynthesis.speak(speech);
-    });
-</script>
-
+  </div>
 </body>
 </html>
+

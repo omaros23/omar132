@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #0d1b2a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .dashboard-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #1b263b;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2.5rem;
+      color: #00b4d8;
+    }
+
+    .card {
+      background-color: #243447;
+      border: none;
+      border-radius: 16px;
+      padding: 20px;
+      color: #ffffff;
+      transition: transform 0.3s;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      color: #00b4d8;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      background-color: #00b4d8;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #adb5bd;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #ced4da;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Student Dashboard</h1>
+    <p>Welcome back, <strong>Omar Mostafa</strong>!</p>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-title">Personal Info</div>
+        <p><span class="info-label">Name:</span> Omar Mostafa</p>
+        <p><span class="info-label">College:</span> Faculty of Engineering</p>
+        <p><span class="info-label">Year:</span> 3rd Year</p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-title">Academic Stats</div>
+        <p><span class="info-label">Total Subjects:</span> 10</p>
+        <p><span class="info-label">Completed Subjects:</span> 6</p>
+        <p><span class="info-label">GPA:</span> 3.6</p>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-title">Progress</div>
+        <p><span class="info-label">Current Progress:</span> 60%</p>
+        <div class="progress" style="height: 25px;">
+          <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 SmartEdu. All rights reserved.
+  </div>
+</div>
+
+</body>
+</html>
+

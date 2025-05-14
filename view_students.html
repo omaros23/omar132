@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Students</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #2c3e50;
+      color: #ecf0f1;
+    }
+    .navbar {
+      background-color: #34495e;
+    }
+    .navbar .nav-link {
+      color: #ecf0f1;
+    }
+    .navbar .nav-link:hover {
+      color: #00b4d8;
+    }
+    .container {
+      max-width: 1000px;
+    }
+    .card {
+      margin-bottom: 30px;
+      background-color: #3d566e;
+      color: #ecf0f1;
+    }
+    .card .card-title {
+      color: #ecf0f1;
+    }
+    .progress-bar {
+      background-color: #00b4d8;
+    }
+    .footer {
+      background-color: #34495e;
+      color: #ecf0f1;
+      padding: 20px;
+    }
+    .btn-custom {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Admin Dashboard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="admin-dashboard.html">Add Student</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="view_students.html">View Students</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Student List -->
+<div class="container py-5">
+  <h2 class="text-center mb-4">Student List</h2>
+  <div id="studentList">
+    <!-- Student List will be populated here dynamically -->
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer text-center py-3">
+  <p>&copy; 2025 Admin Dashboard. All rights reserved.</p>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-dark">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Student</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm">
+          <input type="hidden" id="editIndex">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" id="editName" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="editEmail" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-control" id="editPhone" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Major</label>
+            <input type="text" class="form-control" id="editMajor" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Year</label>
+            <input type="text" class="form-control" id="editYear" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">University</label>
+            <input type="text" class="form-control" id="editUniversity" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">GPA</label>
+            <input type="number" class="form-control" id="editGPA" step="0.01" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Progress (%)</label>
+            <input type="number" class="form-control" id="editProgress" min="0" max="100" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let students = JSON.parse(localStorage.getItem('students')) || [];
+
+  function renderStudentList() {
+    const studentListContainer = document.getElementById('studentList');
+    studentListContainer.innerHTML = '';
+
+    students.forEach((student, index) => {
+      const studentCard = document.createElement('div');
+      studentCard.className = 'card';
+      studentCard.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">${student.name}</h5>
+          <p><strong>Email:</strong> ${student.email}</p>
+          <p><strong>Phone:</strong> ${student.phone}</p>
+          <p><strong>Major:</strong> ${student.major}</p>
+          <p><strong>Year of Study:</strong> ${student.year}</p>
+          <p><strong>University:</strong> ${student.university}</p>
+          <p><strong>GPA:</strong> ${student.gpa}</p>
+          <div class="progress mb-3">
+            <div class="progress-bar" role="progressbar" style="width: ${student.progress}%;" aria-valuenow="${student.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <p class="card-text">Progress: ${student.progress}%</p>
+          <button class="btn btn-warning btn-sm btn-custom" onclick="editStudent(${index})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteStudent(${index})">Delete</button>
+        </div>
+      `;
+      studentListContainer.appendChild(studentCard);
+    });
+  }
+
+  function editStudent(index) {
+    const student = students[index];
+    document.getElementById('editIndex').value = index;
+    document.getElementById('editName').value = student.name;
+    document.getElementById('editEmail').value = student.email;
+    document.getElementById('editPhone').value = student.phone;
+    document.getElementById('editMajor').value = student.major;
+    document.getElementById('editYear').value = student.year;
+    document.getElementById('editUniversity').value = student.university;
+    document.getElementById('editGPA').value = student.gpa;
+    document.getElementById('editProgress').value = student.progress;
+
+    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+    editModal.show();
+  }
+
+  document.getElementById('editForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const index = document.getElementById('editIndex').value;
+    students[index] = {
+      name: document.getElementById('editName').value,
+      email: document.getElementById('editEmail').value,
+      phone: document.getElementById('editPhone').value,
+      major: document.getElementById('editMajor').value,
+      year: document.getElementById('editYear').value,
+      university: document.getElementById('editUniversity').value,
+      gpa: parseFloat(document.getElementById('editGPA').value),
+      progress: parseInt(document.getElementById('editProgress').value)
+    };
+    localStorage.setItem('students', JSON.stringify(students));
+    renderStudentList();
+    bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+  });
+
+  function deleteStudent(index) {
+    if (confirm('Are you sure you want to delete this student?')) {
+      students.splice(index, 1);
+      localStorage.setItem('students', JSON.stringify(students));
+      renderStudentList();
+    }
+  }
+
+  // Initial render
+  renderStudentList();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
